@@ -1,0 +1,5 @@
+backend/node_modules/
+backend/uploads/
+backend/ormconfig.json
+backend/.DS_Store
+.DS_Store

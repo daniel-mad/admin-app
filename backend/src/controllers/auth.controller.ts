@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Errback, ErrorRequestHandler, Request, Response } from 'express';
 import { getManager } from 'typeorm';
 import { User } from '../entity/user.entity';
 import { RegisterValidation } from '../Validation/register.validation';
@@ -14,13 +14,20 @@ export const Register = async (req: Request, res: Response) => {
     return res.status(400).send({ message: "Password's did not match" });
 
   const repository = getManager().getRepository(User);
-  const { password, ...user } = await repository.save({
-    first_name: body.first_name,
-    last_name: body.last_name,
-    email: body.email,
-    password: await bcrypt.hash(body.password, 10),
-  });
-  res.status(200).send(user);
+  try {
+    const { password, ...user } = await repository.save({
+      first_name: body.first_name,
+      last_name: body.last_name,
+      email: body.email,
+      password: await bcrypt.hash(body.password, 10),
+      role: {
+        id: 3,
+      },
+    });
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 export const Login = async (req: Request, res: Response) => {

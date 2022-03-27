@@ -5,6 +5,7 @@ export const PermissionMiddleware =
   (access: string) => (req: Request, res: Response, next: NextFunction) => {
     const user = req['user'];
     const permissions: Array<any> = user.role.permissions;
+
     if (req.method === 'GET') {
       if (!permissions.some(p => p.name === `view_${access}`)) {
         return res.status(401).send({

@@ -44,8 +44,10 @@ export const UpdateRole = async (req: Request, res: Response) => {
 };
 export const DeleteRole = async (req: Request, res: Response) => {
   const repository = getManager().getRepository(Role);
-
-  await repository.delete(req.params.id);
-
-  res.status(204).send(null);
+  try {
+    await repository.delete(req.params.id);
+    res.status(204).send(null);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };

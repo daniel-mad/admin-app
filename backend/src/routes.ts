@@ -80,7 +80,7 @@ export const routes = (router: Router) => {
   router.get(
     '/api/permissions',
     AuthMiddleware,
-    PermissionMiddleware('permissions'),
+    PermissionMiddleware('roles'),
     Permissions
   );
   // Roles routes

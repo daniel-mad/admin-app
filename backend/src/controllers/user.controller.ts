@@ -27,6 +27,7 @@ export const Users = async (req: Request, res: Response) => {
 
 export const CreateUser = async (req: Request, res: Response) => {
   const { role_id, ...body } = req.body;
+
   const hashedPassword = await bcrypt.hash('1234', 10);
 
   const repository = getManager().getRepository(User);
